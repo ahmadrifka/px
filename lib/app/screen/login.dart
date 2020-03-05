@@ -85,7 +85,9 @@ Widget form(context) {
           margin: EdgeInsets.symmetric(vertical: 10.0),
           width: MediaQuery.of(context).size.width * 0.9,
           height: MediaQuery.of(context).size.height * 0.07,
-          child: RaisedButton(onPressed: (){},
+          child: RaisedButton(onPressed: (){
+            Navigator.pushNamed(context, '/home');
+          },
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)) ,
             color: Colors.redAccent,
             child: Text('Login',style: TextStyle(color: Colors.white,
