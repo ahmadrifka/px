@@ -13,7 +13,6 @@ class _HomeState extends State<Home> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            
             leading: IconButton(
               icon: Icon(Icons.notifications), onPressed: (){}),
             expandedHeight: 220.0,

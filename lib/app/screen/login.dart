@@ -6,6 +6,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  GlobalKey _globalKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                           image: NetworkImage(
                               'https://image.freepik.com/free-vector/creativity-concept-illustration_114360-1083.jpg'))),
                 ),
-                form(context),
+                form(context, _globalKey),
               ],
             ),
           ),
@@ -52,26 +55,27 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-Widget form(context) {
+Widget form(context, _globalKey) {
   return Container(
+    key: _globalKey,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        TextField(
+        TextFormField(
+
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(color: Colors.red)
                 ),
             labelText: 'Username or Email',
-
           ),
-          
+          validator: (val) => val.isEmpty ? 'Email or Username required' : null,
         ),
         SizedBox(
           height: 10,
         ),
-        TextField(
+        TextFormField(
           decoration: InputDecoration(
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10.0), borderSide: BorderSide(
@@ -80,6 +84,7 @@ Widget form(context) {
             labelText: 'Password',
           ),
           obscureText: true,
+          validator: (val) => val.isEmpty ? 'password is required' : null,
         ),
         Container(
           margin: EdgeInsets.symmetric(vertical: 10.0),
