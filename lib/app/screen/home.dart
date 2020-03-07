@@ -111,7 +111,6 @@ class _BottomBarState extends State<BottomBar> {
   }
 }
 
-
 Widget announcmentWidget (context){
   String announ = 'You\'ve been scheduled at 8 AM \n (Jakarta time) at Menara BTPN CBD \n Mega Kuningan';
   int daysCount = 10;
