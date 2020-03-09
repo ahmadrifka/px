@@ -17,10 +17,11 @@ class _HomeState extends State<Home> {
     return Scaffold(
         body: CustomScrollView(
           slivers: <Widget>[
-            _buildSliverHead(),
+            // _buildSliverHead(),
+            AppBar(imageAppBar),
             SliverToBoxAdapter(
-              child: ContentHome(),
-            )
+                child: ContentHome(),
+              ),
           ],
         ),
         bottomNavigationBar: BottomBar());
@@ -67,33 +68,41 @@ class AppBar extends StatelessWidget {
   }
 }
 
-class ContentHome extends StatefulWidget {
-  @override
-  _ContentHomeState createState() => _ContentHomeState();
-}
 
-class _ContentHomeState extends State<ContentHome> {
+class ContentHome extends StatelessWidget {
+
   List listData = [
     {'title': 'Preboarding - Finish your Profile', 'percent': 12.0},
     {'title': 'Onboarding Day 1 - Tasks', 'percent': 0.0},
     {'title': 'Onboarding Day 2 - Tasks', 'percent': 0.0},
     {'title': 'Onboarding Day 3 - Tasks', 'percent': 0.0},
   ];
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
-        announcmentWidget(context),
-        taskTile(),
-        // ListView.builder(
-        //   itemCount: listData.length,
-        //   itemBuilder: (context, index){
-        //     return taskList(listData[index]);
-        //   })
-        taskList('Preboarding - Finish your Profile', '12%', context),
-        taskList('Onboarding Day 1 - Tasks', '0%', context),
-        taskList('Onboarding Day 2 - Tasks', '0%', context),
-      ],
+        children: <Widget>[
+          //  Container(
+          //     width: MediaQuery.of(context).size.width,
+          //     height: MediaQuery.of(context).size.height * 0.1,
+          //     decoration: BoxDecoration(
+          //       color: Colors.blue,
+          //       borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(30))
+          //     ),
+          //   ),
+          announcmentWidget(context),
+          taskTile(),
+          // ListView.builder(
+          //   itemCount: listData.length,
+          //   itemBuilder: (context, index){
+          //     return taskList(listData[index]);
+          //   })
+          taskList('Preboarding - Finish your Profile', '12%', context),
+          taskList('Onboarding Day 1 - Tasks', '0%', context),
+          taskList('Onboarding Day 2 - Tasks', '0%', context),
+        ],
+
     );
   }
 }
@@ -155,7 +164,7 @@ Widget announcmentWidget (context){
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(announ, textAlign: TextAlign.center, style: TextStyle(
-          fontSize: 17.0,
+          fontSize: 15.0,
         ),),
         Container(
           margin: EdgeInsets.all(10),
@@ -166,7 +175,7 @@ Widget announcmentWidget (context){
           ), ),
         ),
         Text('Days To Go', style: TextStyle(
-          fontSize: 17.0,
+          fontSize: 14.0,
         ),)
       ],
     ),
@@ -187,7 +196,7 @@ Widget taskTile (){
 Widget taskList(title, percent, context){
   
   return Container(
-    padding: EdgeInsets.all(25.0),
+    padding: EdgeInsets.all(15.0),
     margin: EdgeInsets.all(10.0),
     width: MediaQuery.of(context).size.width,
     decoration: BoxDecoration(
@@ -209,7 +218,7 @@ Widget taskList(title, percent, context){
           children: <Widget>[
             Text(title,),
             Container(
-              width: MediaQuery.of(context).size.width * 0.75,
+              width: MediaQuery.of(context).size.width * 0.7,
               child: LinearProgressIndicator(
                 value: 0.0,
               ),

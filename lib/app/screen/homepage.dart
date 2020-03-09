@@ -10,7 +10,6 @@ class HomePage extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    // TODO: implement build
     return Stack(
       children: <Widget>[
         Image.asset(url, 
@@ -35,16 +34,13 @@ class HomePage extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  // TODO: implement maxExtent
   double get maxExtent => expandedHeight;
 
   @override
-  // TODO: implement minExtent
   double get minExtent => 0;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    // TODO: implement shouldRebuild
     return true;
   }
 }
