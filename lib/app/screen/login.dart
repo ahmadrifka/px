@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
           color: Colors.white,
           child: Container(
             margin: EdgeInsets.all(30.0),
-            padding: EdgeInsets.only(top: 15.0),
+            padding: EdgeInsets.only(top: 10.0),
             child: Column(
               children: <Widget>[
                 Container(
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.45,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage('assets/picture/creativity.jpg'))),
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Container(
-              height: MediaQuery.of(context).size.height * 0.1,
+              height: MediaQuery.of(context).size.height * 0.09,
               child: TextFormField(
                 decoration: InputDecoration(
                   border:
@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 10,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.1,
+              height: MediaQuery.of(context).size.height * 0.09,
               child: TextFormField(
                 decoration: InputDecoration(
                   border:
@@ -103,6 +103,15 @@ class _LoginPageState extends State<LoginPage> {
               margin: EdgeInsets.symmetric(vertical: 10.0),
               width: MediaQuery.of(context).size.width * 0.4,
               height: MediaQuery.of(context).size.height * 0.07,
+              decoration: BoxDecoration(
+                boxShadow: [
+              new BoxShadow(
+                color: Colors.grey[300],
+                 offset: new Offset(5.0, 5.0),
+                blurRadius: 20
+                  ),
+                ],
+              ),
               child: RaisedButton(
                 onPressed: () {
                 },
@@ -111,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Icon(FontAwesomeIcons.googlePlusG),
+                    Icon(FontAwesomeIcons.googlePlusG, color: Colors.blue,),
                     SizedBox(width: 10.0,),
                     Text('Sign In')
                   ],

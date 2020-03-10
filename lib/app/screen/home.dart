@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:px_project/app/screen/homepage.dart';
+import 'package:px_project/app/screen/profile.dart';
+import 'package:px_project/app/screen/task.dart';
 
 class Home extends StatefulWidget {
   static final String homeRouteName = '/home';
@@ -10,27 +12,31 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final double expandedHeight = 250;
   final double roundedRadiusHeight = 30;
-  String imageAppBar = 'assets/picture/px.jpeg';
+  int _currentIndex = 0;
+
+   List<Widget> _children = [
+    ContentHome(),
+    Task(),
+    Profile()
+  ];
+
+  void onTapped(int index){
+  setState(() {
+    this._currentIndex = index;
+  });
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CustomScrollView(
-          slivers: <Widget>[
-            // _buildSliverHead(),
-            AppBar(imageAppBar),
-            SliverToBoxAdapter(
-                child: ContentHome(),
-              ),
-          ],
-        ),
-        bottomNavigationBar: BottomBar());
+        body: _children[_currentIndex],
+        bottomNavigationBar: BottomBar(_currentIndex, onTapped));
   }
 
-  Widget _buildSliverHead(){
-  return SliverPersistentHeader(
-    delegate: HomePage(expandedHeight, roundedRadiusHeight, imageAppBar));
-  }
+  // Widget _buildSliverHead(){
+  // return SliverPersistentHeader(
+  //   delegate: HomePage(expandedHeight, roundedRadiusHeight, imageAppBar));
+  // }
 
 }
 
@@ -50,12 +56,12 @@ class AppBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('Hi, Agent Paul', style: TextStyle(color: Colors.black),),
+          Text('Hi, James Bond', style: TextStyle(color: Colors.black, fontSize: 15.0),),
           Icon(Icons.notifications, color: Colors.black,),
         ],
       ),
     ),
-              expandedHeight: 220.0,
+              expandedHeight: 170.0,
               // floating: true,
               // backgroundColor: Colors.yellow,
               flexibleSpace: FlexibleSpaceBar(
@@ -70,6 +76,7 @@ class AppBar extends StatelessWidget {
 
 
 class ContentHome extends StatelessWidget {
+  String imageAppBar = 'assets/picture/px.jpeg';
 
   List listData = [
     {'title': 'Preboarding - Finish your Profile', 'percent': 12.0},
@@ -81,58 +88,61 @@ class ContentHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: <Widget>[
-          //  Container(
-          //     width: MediaQuery.of(context).size.width,
-          //     height: MediaQuery.of(context).size.height * 0.1,
-          //     decoration: BoxDecoration(
-          //       color: Colors.blue,
-          //       borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(30))
-          //     ),
-          //   ),
-          announcmentWidget(context),
-          taskTile(),
-          // ListView.builder(
-          //   itemCount: listData.length,
-          //   itemBuilder: (context, index){
-          //     return taskList(listData[index]);
-          //   })
-          taskList('Preboarding - Finish your Profile', '12%', context),
-          taskList('Onboarding Day 1 - Tasks', '0%', context),
-          taskList('Onboarding Day 2 - Tasks', '0%', context),
-        ],
+    return CustomScrollView(
+          slivers: <Widget>[
+            // _buildSliverHead(),
+            AppBar(imageAppBar),
+            SliverToBoxAdapter(
+                child: Column(
+                  children: <Widget>[
+            //  Container(
+            //     width: MediaQuery.of(context).size.width,
+            //     height: MediaQuery.of(context).size.height * 0.1,
+            //     decoration: BoxDecoration(
+            //       color: Colors.blue,
+            //       borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(30))
+            //     ),
+            //   ),
+            announcmentWidget(context),
+            taskTile(),
+            // ListView.builder(
+            //   itemCount: listData.length,
+            //   itemBuilder: (context, index){
+            //     return taskList(listData[index]);
+            //   })
+            taskList('Preboarding - Finish your Profile', 12, context),
+            taskList('Onboarding Day 1 - Tasks', 0, context),
+            taskList('Onboarding Day 2 - Tasks', 0, context),
+          ],
 
-    );
+            ),
+          ),
+        ],
+      );
   }
 }
 
 class BottomBar extends StatefulWidget {
+  int selectedIndex;
+  Function onItemTap;
+  BottomBar(this.selectedIndex, this.onItemTap);
   @override
-  _BottomBarState createState() => _BottomBarState();
+  _BottomBarState createState() => _BottomBarState(selectedIndex, onItemTap);
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int _selectedIndex = 0;
-
-  List<Widget> list = [
-
-  ];
-
-  void _onItemTap(int index){
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
+  int selectedIndex;
+  Function onItemTap;
+  _BottomBarState(this.selectedIndex, this.onItemTap);
+  
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       
-      currentIndex: _selectedIndex,
+      currentIndex: selectedIndex,
       selectedItemColor: Colors.red,
-      onTap: _onItemTap,
+      onTap: onItemTap,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
         BottomNavigationBarItem(icon: Icon(Icons.list), title: Text('Task')),
@@ -194,7 +204,10 @@ Widget taskTile (){
 }
 
 Widget taskList(title, percent, context){
-  
+  double sizing = 0;
+  if(percent == 12){
+    sizing = 0.20;
+  }
   return Container(
     padding: EdgeInsets.all(15.0),
     margin: EdgeInsets.all(10.0),
@@ -218,12 +231,12 @@ Widget taskList(title, percent, context){
           children: <Widget>[
             Text(title,),
             Container(
-              width: MediaQuery.of(context).size.width * 0.7,
+              width: MediaQuery.of(context).size.width * sizing,
               child: LinearProgressIndicator(
                 value: 0.0,
               ),
             ),
-            Text(percent)
+            Text('$percent%')
           ],
         ),
         Icon(Icons.arrow_forward_ios, color: Colors.purple,)
