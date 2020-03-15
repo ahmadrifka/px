@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:px_project/app/screen/homepage.dart';
-import 'package:px_project/app/screen/profile.dart';
+import 'package:px_project/app/screen/profile/profile_screen.dart';
 import 'package:px_project/app/screen/task.dart';
 
 class Home extends StatefulWidget {
@@ -12,12 +11,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final double expandedHeight = 250;
   final double roundedRadiusHeight = 30;
+  String imageAppBar = 'assets/picture/px.jpeg';
   int _currentIndex = 0;
 
    List<Widget> _children = [
     ContentHome(),
     Task(),
-    Profile()
+    MyProfilePage()
   ];
 
   void onTapped(int index){
@@ -26,8 +26,11 @@ class _HomeState extends State<Home> {
   });
 }
 
+  
+
   @override
   Widget build(BuildContext context) {
+    print(_currentIndex);
     return Scaffold(
         body: _children[_currentIndex],
         bottomNavigationBar: BottomBar(_currentIndex, onTapped));
@@ -57,7 +60,7 @@ class AppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text('Hi, James Bond', style: TextStyle(color: Colors.black, fontSize: 15.0),),
-          Icon(Icons.notifications, color: Colors.black,),
+          Icon(Icons.notifications_none, color: Colors.black,),
         ],
       ),
     ),
@@ -125,24 +128,32 @@ class ContentHome extends StatelessWidget {
 class BottomBar extends StatefulWidget {
   int selectedIndex;
   Function onItemTap;
-  BottomBar(this.selectedIndex, this.onItemTap);
+  BottomBar(this.selectedIndex,this.onItemTap);
   @override
-  _BottomBarState createState() => _BottomBarState(selectedIndex, onItemTap);
+  _BottomBarState createState() => _BottomBarState(selectedIndex,onItemTap);
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int selectedIndex;
+  int _currentIndex;
   Function onItemTap;
-  _BottomBarState(this.selectedIndex, this.onItemTap);
+  _BottomBarState(this._currentIndex,this.onItemTap);
   
+  void onTapped(int index){
+  setState(() {
+    this._currentIndex = index;
+  });
+}
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       
-      currentIndex: selectedIndex,
-      selectedItemColor: Colors.red,
-      onTap: onItemTap,
+      currentIndex: _currentIndex,
+      selectedItemColor: Colors.purple,
+      onTap: (e) => {
+        onItemTap(e),
+        onTapped(e)
+      },
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
         BottomNavigationBarItem(icon: Icon(Icons.list), title: Text('Task')),

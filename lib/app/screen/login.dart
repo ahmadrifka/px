@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: MediaQuery.of(context).size.height * 0.45,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/picture/creativity.jpg'))),
+                          image: AssetImage('assets/picture/landingpage.jpeg'))),
                 ),
                 form(context, _globalKey),
               ],
@@ -62,10 +62,11 @@ class _LoginPageState extends State<LoginPage> {
       child: Form(
         key: _globalKey,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Container(
-              height: MediaQuery.of(context).size.height * 0.09,
+              margin: EdgeInsets.symmetric(vertical: 10.0),
+              height: MediaQuery.of(context).size.height * 0.07,
               child: TextFormField(
                 decoration: InputDecoration(
                   border:
@@ -79,10 +80,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.09,
+              height: MediaQuery.of(context).size.height * 0.07,
               child: TextFormField(
                 decoration: InputDecoration(
                   border:
@@ -136,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                 }
                   Navigator.pushNamed(context, '/home');},
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)) ,
-                color: Colors.redAccent,
+                color: Colors.purple[500],
                 child: Text('Login',style: TextStyle(color: Colors.white,
                     fontSize: 20.0
                 ),),),
