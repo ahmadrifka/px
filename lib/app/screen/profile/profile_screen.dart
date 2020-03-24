@@ -1,12 +1,46 @@
 import 'package:circle_wheel_scroll/circle_wheel_scroll_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_circular_text/circular_text/widget.dart';
 
-class MyProfilePage extends StatelessWidget {
+class MyProfilePage extends StatefulWidget {
+  @override
+  _MyProfilePageState createState() => _MyProfilePageState();
+}
+
+class _MyProfilePageState extends State<MyProfilePage> {
   final String title = 'My Profile';
   Color colorsWhite = Colors.white;
+  List<String> listNama = ['Home', 'Albums', 'Profile', 'Task','Play Music' ,'Pin' ,'Download' ,'Schedule' ,'Music'];
+  static List<Widget> otherStuff = [
+    Icon(Icons.home, color: Colors.purple,),
+    Icon(Icons.image, color: Colors.purple,),
+    Icon(Icons.portrait, color: Colors.purple),];
+  static List<Widget> proveIf= [
+    Icon(Icons.people_outline, color: Colors.purple,),
+    Icon(Icons.school, color: Colors.purple),
+    Icon(Icons.home, color: Colors.purple),
+    Icon(Icons.account_balance_wallet, color: Colors.purple),
+    Icon(Icons.credit_card, color: Colors.purple),
+  ];
+  static List<Widget> insurance = [
+    Icon(Icons.people_outline, color: Colors.purple),
+    Icon(Icons.branding_watermark, color: Colors.purple),
+  ];
+  static List<Widget> national = [
+    Icon(Icons.flag, color:Colors.purple),
+  ];
+ 
+  int currentState = 0;
+  List listItem = [ 
+  {'key':'Other Stuff', 'value': otherStuff },
+  { 'key':'Prove if this is you', 'value' : proveIf}, 
+  {'key':'Health Insurance', 'value' : insurance}, 
+  {'key':'Nationality', 'value': national}];
 
+ 
+  
   List<Widget> listIcon = [
-    Icon(Icons.home, color: Colors.white,),
+    Icon(Icons.home, color: Colors.purple,),
     Icon(Icons.image, color: Colors.white,),
     Icon(Icons.portrait, color: Colors.white,),
     Icon(Icons.poll, color: Colors.white,),
@@ -16,6 +50,13 @@ class MyProfilePage extends StatelessWidget {
     Icon(Icons.schedule, color: Colors.white,),
     Icon(Icons.library_music, color: Colors.white,),
   ];
+
+
+  void onChange(int value){
+    setState(() {
+      currentState = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,13 +189,7 @@ class MyProfilePage extends StatelessWidget {
                                   Padding(
                                     padding:
                                     const EdgeInsets.symmetric(vertical: 10.0),
-                                    child: Text(
-                                      'Add Your Picture',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w300),
-                                    ),
+                                    child: _iconItems(currentState)
                                   ),
                                 ],
                               ),
@@ -170,11 +205,12 @@ class MyProfilePage extends StatelessWidget {
                                 alignment: FractionalOffset.center,
                                   transform: Matrix4.identity()..rotateX(3.14),
                                   child: CircleListScrollView(
+                                  onSelectedItemChanged: ((e) => onChange(e)),
                                   physics: CircleFixedExtentScrollPhysics(),
                                   axis: Axis.horizontal,
                                   itemExtent: 60,
-                                  children: List.generate(listIcon.length, _buildItem),
-                                  radius: MediaQuery.of(context).size.width * 0.6,
+                                  children: List.generate(listItem.length, _buildItem),
+                                  radius: MediaQuery.of(context).size.width * 0.9,
                                 ),
                               ),
                             ),
@@ -205,18 +241,31 @@ class MyProfilePage extends StatelessWidget {
           alignment: FractionalOffset.center,
           transform: new Matrix4.identity()..rotateX(3.14),
             child: Container(
-            height: 40,
-            width: 40,
-            color: Colors.purple,
+            // color: Colors.purple,
             child: Center(
-              child: listIcon[i]
+              child: Text(listItem[currentState]['key'], style: TextStyle(fontSize: 20, color: Colors.purple),)
             ),
           ),
         ),
       ),
     );
   }
+
+
+Widget _iconItems(index) {
+    return Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: listItem[index]['value']
+                // <Widget>[
+                //   Text(listItem[currentState]['value'].length.toString())
+                // ]
+              )
+    );
+  }
+
 }
+
 
 class ContainerClipper extends CustomClipper<Path> {
   @override
